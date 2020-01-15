@@ -1,0 +1,91 @@
+SELECT first_name, last_update
+FROM actor
+WHERE first_name IS NOT NULL;
+
+SELECT DISTINCT first_name,email,active
+FROM customer
+WHERE active IS NOT NULL
+LIMIT 10;
+
+--- SQL AGREGATIONS
+-- MIN(), MAX(), COUNT(), AVG(), SUM()
+
+SELECT COUNT(DISTINCT first_name)
+FROM customer
+WHERE first_name LIKE 'L%';
+
+SELECT customer_id, amount
+FROM payment
+WHERE amount < '5.00'
+ORDER BY customer_id ASC;
+
+SELECT payment_id, amount, rental_id
+FROM payment
+where amount BETWEEN '0.99'AND '3.99';
+
+SELECT AVG (amount) AS payment_id_average
+FROM payment
+WHERE payment_id = '17511';
+
+SELECT COUNT(payment_id)
+FROM payment;
+
+SELECT customer_id, SUM(amount)
+FROM payment
+WHERE staff_id = 2
+GROUP BY customer_id
+ORDER BY customer_id ASC;
+
+SELECT customer_id, SUM(amount) 
+FROM payment 
+WHERE staff_id = 2 AND customer_id = 341
+GROUP BY customer_id
+ORDER BY customer_id DESC;
+
+--CREATE TABLES REFRESHER
+
+CREATE TABLE popular_movies(
+	movie_id SERIAL PRIMARY KEY,
+	movie_title VARCHAR(100),
+	description VARCHAR(250),
+	date_created TIMESTAMP DEFAULT NOW(),
+	budget NUMERIC(10,2)
+);
+	
+CREATE TABLE popular_characters(
+	character_id SERIAL PRIMARY KEY,
+	character_name VARCHAR(100) NOT NULL,
+	back_story VARCHAR(250),
+	enemies INTEGER,
+	pop_movie_id INTEGER NOT NULL,
+	FOREIGN KEY(pop_movie_id) REFERENCES popular_movies(movie_id)
+);
+
+--ALTER STATEMENT
+ALTER TABLE popular_characters
+ADD super_power VARCHAR(50);
+
+-- INSERT STATEMENT
+INSERT INTO popular_movies(movie_id, movie_title,description,budget)
+VALUES(1,'Black Panther', 'Fight to save Wakanda', 10000000.00);
+
+INSERT INTO popular_characters(character_name,back_story,enemies, pop_movie_id, super_power)
+VALUES('Tachalla', 'Father killed, becomes king of Wakanda', 2,1,'Dope Suit');
+
+
+--UPDATE STATEMENT
+UPDATE popular_characters
+SET back_story = 'In a World...where super heroes are not that super...'
+WHERE pop_movie_id = 1;
+
+SELECT back_story
+FROM popular_characters;
+
+--DELETE STATEMENT
+
+DELETE FROM popular_characters
+WHERE pop_movie_id = 1;
+
+--DROP STATEMENT/DELETES TABLE/CASCADE REMOVES FOREIGN STATEMENT
+DROP TABLE popular_movies CASCADE;
+DROP TABLE popular_characters;

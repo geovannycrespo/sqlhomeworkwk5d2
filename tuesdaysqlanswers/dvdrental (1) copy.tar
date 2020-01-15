@@ -1,0 +1,54 @@
+--1
+SELECT last_name
+FROM actor
+WHERE last_name LIKE 'Wahl%';
+--2
+SELECT COUNT(payment_id)
+FROM payment
+WHERE amount BETWEEN '3.99'AND '5.99';
+--3
+SELECT film_id, COUNT(*)
+FROM inventory
+GROUP BY film_id
+ORDER BY COUNT(*) DESC
+limit 1;
+--4
+SELECT last_name
+FROM customer
+WHERE last_name LIKE 'William%';
+--5
+SELECT staff_id, count(*)
+FROM rental
+GROUP BY staff_id
+ORDER BY staff_id DESC;
+
+--6
+SELECT COUNT (DISTINCT district)
+FROM address;
+--7
+SELECT film_id, COUNT(*)
+FROM film_actor
+GROUP BY film_id
+ORDER BY COUNT(*) DESC
+LIMIT 1;
+--8
+SELECT COUNT(*)
+FROM customer
+WHERE store_id = 1 AND last_name LIKE '%es';
+--9
+SELECT amount, COUNT(*)
+FROM payment
+WHERE customer_id BETWEEN 380 AND 430
+GROUP BY amount
+HAVING COUNT(*) > 250;
+
+--10
+SELECT rating, COUNT(*)
+FROM film
+GROUP BY rating
+ORDER BY COUNT(*) DESC
+LIMIT 1;
+
+
+
+
